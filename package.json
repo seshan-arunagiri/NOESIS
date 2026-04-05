@@ -1,0 +1,43 @@
+{
+  "name": "code-learning-extension",
+  "displayName": "Code Learning Assistant",
+  "description": "Learn programming with AI-generated questions",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.73.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:python",
+    "onLanguage:java"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "code-learning.analyzeCode",
+        "title": "🤖 Analyze with AI & Generate Questions"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "code-learning.analyzeCode",
+          "group": "education"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.6.0",
+    "dotenv": "^16.6.1"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.20.0"
+  }
+}
