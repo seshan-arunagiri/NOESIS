@@ -2,14 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch Extension",
+      "name": "🚀 Launch NOESIS Extension",
       "type": "extensionHost",
       "request": "launch",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}"
       ],
-      "outFiles": [
-        "${workspaceFolder}/out/**/*.js"
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "sourceMaps": false,
+      "skipFiles": [
+        "<node_internals>/**"
       ]
     }
   ]

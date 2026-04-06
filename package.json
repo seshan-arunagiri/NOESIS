@@ -1,40 +1,138 @@
 {
   "name": "code-learning-extension",
-  "displayName": "Code Learning Assistant",
-  "description": "Learn programming with AI-generated questions",
-  "version": "0.0.1",
+  "displayName": "NOESIS — Code Understanding Validator",
+  "description": "AI-powered code quiz extension. Generates adaptive questions as you code, powered by OpenRouter.",
+  "version": "1.0.0",
+  "publisher": "noesis",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noesis/code-learning-extension"
+  },
+  "homepage": "https://github.com/noesis/code-learning-extension#readme",
+  "icon": "assets/icon.png",
   "engines": {
     "vscode": "^1.73.0"
   },
   "categories": [
     "Education",
-    "Other"
+    "Other",
+    "Machine Learning"
+  ],
+  "keywords": [
+    "learning",
+    "AI",
+    "quiz",
+    "openrouter",
+    "code understanding"
   ],
   "activationEvents": [
+    "onStartupFinished",
+    "onCommand:extension.startAnalysis",
+    "onCommand:code-learning.analyzeCode",
     "onLanguage:javascript",
-    "onLanguage:python",
-    "onLanguage:java"
+    "onLanguage:typescript",
+    "onLanguage:python"
   ],
   "main": "./src/extension.js",
   "contributes": {
     "commands": [
       {
+        "command": "extension.startAnalysis",
+        "title": "🎓 Start NOESIS Analysis",
+        "category": "NOESIS"
+      },
+      {
         "command": "code-learning.analyzeCode",
-        "title": "🤖 Analyze with AI & Generate Questions"
+        "title": "🤖 Analyze Code & Generate Questions",
+        "category": "NOESIS"
+      },
+      {
+        "command": "code-learning.showPanel",
+        "title": "📚 Show Learning Panel",
+        "category": "NOESIS"
+      },
+      {
+        "command": "code-learning.resetStats",
+        "title": "🗑️ Reset Performance Stats",
+        "category": "NOESIS"
       }
     ],
     "menus": {
       "editor/context": [
         {
+          "command": "extension.startAnalysis",
+          "group": "education@1",
+          "when": "editorIsOpen"
+        },
+        {
           "command": "code-learning.analyzeCode",
-          "group": "education"
+          "group": "education@2",
+          "when": "editorIsOpen"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "extension.startAnalysis",
+          "group": "navigation@1",
+          "when": "editorIsOpen"
+        },
+        {
+          "command": "code-learning.showPanel",
+          "group": "navigation@2",
+          "when": "editorIsOpen"
         }
       ]
+    },
+    "configuration": {
+      "title": "NOESIS Code Validator",
+      "properties": {
+        "codeValidator.openrouterApiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Your OpenRouter API key. Get one free at https://openrouter.ai/keys",
+          "scope": "application"
+        },
+        "codeValidator.numQuestions": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Number of questions to generate per analysis",
+          "scope": "resource"
+        },
+        "codeValidator.analyzeOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically analyze code when a file is saved",
+          "scope": "resource"
+        },
+        "codeValidator.supportedLanguages": {
+          "type": "array",
+          "default": [
+            "javascript",
+            "typescript",
+            "python",
+            "java",
+            "cpp",
+            "c",
+            "go",
+            "rust"
+          ],
+          "description": "Languages to trigger analysis for on save",
+          "scope": "resource"
+        }
+      }
     }
   },
+  "scripts": {
+    "compile": "echo Compiled OK (JavaScript project - no transpilation needed)",
+    "watch": "echo Watch mode not applicable for plain JS",
+    "lint": "echo Lint not configured",
+    "package": "npx @vscode/vsce package",
+    "install-deps": "npm install"
+  },
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
-    "axios": "^1.6.0",
     "dotenv": "^16.6.1"
   },
   "devDependencies": {
